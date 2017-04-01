@@ -38,8 +38,8 @@ func getIP(addr string) string {
 	return strings.Split(addr, ":")[0]
 }
 
-func makefile(args ...string) (string, error) {
-	command := exec.Command("make", args...)
+func runCommand(args ...string) (string, error) {
+	command := exec.Command("bash", args...)
 	result, err := command.Output()
 	return string(result), err
 }

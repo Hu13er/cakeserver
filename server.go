@@ -16,21 +16,21 @@ func serve(addr, secret string) {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/generate/", grd.generatorHandler)
-	mux.HandleFunc("/make/", grd.guardHandler(makeHandler))
+	mux.HandleFunc("/command/", grd.guardHandler(cmdHandler))
 
 	log.Fatalln(
 		http.ListenAndServe(addr, mux),
 	)
 }
 
-func makeHandler(w http.ResponseWriter, r *http.Request) {
+func cmdHandler(w http.ResponseWriter, r *http.Request) {
 	command, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	result, err := makefile(
+	result, err := runCommand(
 		strings.Split(string(command), " ")...,
 	)
 	if err != nil {
