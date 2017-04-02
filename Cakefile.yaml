@@ -1,0 +1,7 @@
+addr:   ':2128'
+secret: 'secret'
+commands:
+  - name: test
+    trusted: ['127.0.0.1', 'localhost']
+    script: |
+      touch successful
