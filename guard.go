@@ -4,6 +4,8 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/context"
 )
 
 type handlerFunc func(http.ResponseWriter, *http.Request)
@@ -36,23 +38,27 @@ func (g *guard) isForbidden(ip string) bool {
 func (g *guard) guardHandler(handler handlerFunc) handlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		token := r.Header.Get("token")
-		ip := getIP(r.RemoteAddr)
+		context.Set(r, "super", false)
 
+		ip := getIP(r.RemoteAddr)
 		if g.tried[ip] > 3 {
 			w.WriteHeader(http.StatusForbidden)
 			return
 		}
 
-		mustBe := fmt.Sprintf("% x", g.token[:])
-		if token != mustBe {
-			g.tried[ip]++
-			w.WriteHeader(http.StatusForbidden)
-			return
-		}
+		token := r.Header.Get("token")
+		if token != "" {
+			mustBe := fmt.Sprintf("% x", g.token[:])
+			if token != mustBe {
+				g.tried[ip]++
+				w.WriteHeader(http.StatusForbidden)
+				return
+			}
 
-		g.newToken()
-		g.tried[ip] = 0
+			g.newToken()
+			g.tried[ip] = 0
+			context.Set(r, "super", true)
+		}
 
 		handler(w, r)
 	}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"math/rand"
-	"os/exec"
 	"strings"
 )
 
@@ -36,10 +35,4 @@ func isSliceEqual(a, b []byte) bool {
 
 func getIP(addr string) string {
 	return strings.Split(addr, ":")[0]
-}
-
-func runCommand(args ...string) (string, error) {
-	command := exec.Command("bash", args...)
-	result, err := command.Output()
-	return string(result), err
 }
