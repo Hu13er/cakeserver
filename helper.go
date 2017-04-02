@@ -34,5 +34,8 @@ func isSliceEqual(a, b []byte) bool {
 }
 
 func getIP(addr string) string {
-	return strings.Split(addr, ":")[0]
+	if idx := strings.LastIndex(addr, ":"); idx != -1 {
+		return addr[0:idx]
+	}
+	return ""
 }

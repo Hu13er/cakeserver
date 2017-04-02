@@ -1,7 +1,12 @@
 addr:   ':2128'
 secret: 'secret'
 commands:
-  - name: test
-    trusted: ['127.0.0.1', 'localhost']
+  - name: testAll
+    trusted: ['.*']
     script: |
-      touch successful
+      touch everyBODY.txt
+  - name: testMe
+    trusted: ['127.0.0.1']
+    script: |
+      VAR="this is a test."
+      echo $VAR > trustMe.txt

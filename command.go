@@ -2,6 +2,7 @@ package main
 
 import (
 	"os/exec"
+	"regexp"
 	"strings"
 )
 
@@ -31,7 +32,7 @@ func (c *Command) Run() error {
 
 func (c *Command) IsTrusted(ip string) bool {
 	for _, v := range c.Trusted {
-		if v == ip {
+		if matched, err := regexp.MatchString(v, ip); err == nil && matched {
 			return true
 		}
 	}
