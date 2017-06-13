@@ -1,3 +1,4 @@
+# Sample Cakefile:
 addr:   ':2128'
 secret: 'secret'
 commands:
@@ -10,3 +11,4 @@ commands:
     script: |
       VAR="this is a test."
       echo $VAR > trustMe.txt
+
