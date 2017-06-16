@@ -19,9 +19,11 @@ secret: 'mysecret'
 
 # List your commands in here:
 commands:
-  - name: 'foobar' # Your command name
+  - name: 'foobar'      # Your command name
     trusted: ['.*']     # trusted remote machine with regular expression
-    script: |            # Your script
+
+    # Your script: 
+    script: |
      	FILENAME="foobar.txt"
      	touch $FILENAME
      	echo "someone invoked foobar" >> $FILENAME
