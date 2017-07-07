@@ -17,7 +17,7 @@ addr:   ':2128'
 # Your secret that needs for authentication:
 secret: 'mysecret'
 
-# List your commands in here:
+# List your commands here:
 commands:
   - name: 'foobar'      # Your command name
     trusted: ['.*']     # trusted remote machine with regular expression
